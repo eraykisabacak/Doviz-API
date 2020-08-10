@@ -46,6 +46,15 @@ class AltinFiyatlari {
   }
 }
 
+class BorsaFiyatlari {
+  constructor(Name, Fiyat, Degisim, Saat) {
+    this.Name = Name;
+    this.Fiyat = Fiyat;
+    this.Degisim = Degisim;
+    this.Saat = Saat;
+  }
+}
+
 // https://uzmanpara.milliyet.com.tr/
 
 app.get('/', function (req, res) {
@@ -249,6 +258,52 @@ app.get('/gumus', function (req, res) {
         GumusGramTurkLirasi,
       });
       //res.send(gumusDovizler);
+    }
+  );
+});
+
+app.get('/borsa', function (req, res) {
+  var borsalar = [];
+  request(
+    'https://uzmanpara.milliyet.com.tr/canli-borsa/',
+    (error, response, body) => {
+      if (error && res.statusCode == 200) return console.error(error);
+
+      let $ = cheerio.load(body);
+
+      $('#acik_koyu_yeri tbody tr').each(function (i, elem) {
+        if ($(this).text() !== null && $(this).text() !== '')
+          borsalar[i] = $(this).text();
+      });
+      var borsa = [];
+      for (var i = 0; i < borsalar.length; i++) {
+        borsa.push(borsalar[i].split('\t\t\t\t\t\t\t\t\t\t\t\t'));
+      }
+      var borsaName = [];
+      var borsaFiyat = [];
+      var borsaDegisim = [];
+      var borsaZaman = [];
+      for (var i = 0; i < borsa.length; i++) {
+        borsaName.push(borsa[i][1]);
+        borsaFiyat.push(borsa[i][3]);
+        borsaDegisim.push(borsa[i][4]);
+        borsaZaman.push(borsa[i][5]);
+      }
+      var result = [];
+      for (var i = 1; i < borsaName.length; i++) {
+        borsaObject = new BorsaFiyatlari(
+          borsaName[i],
+          borsaFiyat[i],
+          borsaDegisim[i],
+          borsaZaman[i]
+        );
+        result.push(borsaObject);
+      }
+      res.json({ result });
+      console.log(borsaName);
+      console.log(borsaFiyat);
+      console.log(borsaDegisim);
+      console.log(borsaZaman);
     }
   );
 });
