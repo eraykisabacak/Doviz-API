@@ -2,12 +2,13 @@ const express = require('express');
 
 const router = express.Router();
 
-const {
-  indexController,
-  altinController,
-  gumusController,
-  borsaController,
-} = require('../controllers/borsaController');
+const { borsaController } = require('../controllers/borsaController');
+
+const { gumusController } = require('../controllers/gumusController');
+
+const { altinController } = require('../controllers/altinController');
+
+const { indexController } = require('../controllers/indexController');
 
 router.get('/', indexController);
 router.get('/altin', altinController);
