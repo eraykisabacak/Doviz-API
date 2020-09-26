@@ -13,27 +13,54 @@ const kriptoController = function (req, res, next) {
 
     var kriptoSira = [];
     var kriptoName = [];
+    var kriptoImage = [];
+    var kriptoSembol = [];
     var kriptoMarketCap = [];
     var kriptoFiyat = [];
+    var kriptoDurum = [];
     var kriptoVolume = [];
     var kriptoCirculating = [];
     var kriptoChange = [];
+
     $('tbody tr td').each(function (i, elem) {
       if (
         $(this).text() !== null &&
         $(this).text() !== ' ' &&
         $(this).text() !== ''
       )
-        kriptoSatir.push($(this).text());
+        kriptoSatir.push($(this).html());
     });
+
     for (var i = 0; i < kriptoSatir.length; i += 7) {
-      kriptoSira.push(kriptoSatir[i]);
-      kriptoName.push(kriptoSatir[i + 1]);
-      kriptoMarketCap.push(kriptoSatir[i + 2]);
-      kriptoFiyat.push(kriptoSatir[i + 3]);
-      kriptoVolume.push(kriptoSatir[i + 4]);
-      kriptoCirculating.push(kriptoSatir[i + 5]);
-      kriptoChange.push(kriptoSatir[i + 6]);
+      var tempTD = cheerio.load(kriptoSatir[i]);
+      kriptoSira.push(tempTD('p').text());
+
+      var tempTD = cheerio.load(kriptoSatir[i + 1]);
+      kriptoName.push(tempTD('a div div p').html());
+
+      kriptoImage.push(tempTD('a div img').attr('src'));
+
+      kriptoSembol.push(tempTD('a div div div p').text());
+
+      var tempTD = cheerio.load(kriptoSatir[i + 2]);
+      kriptoMarketCap.push(tempTD('p').text());
+
+      var tempTD = cheerio.load(kriptoSatir[i + 3]);
+      kriptoFiyat.push(tempTD('div a').text());
+
+      var tempTD = cheerio.load(kriptoSatir[i + 4]);
+      kriptoDurum.push(tempTD('div div p').attr('color'));
+      if (tempTD('div div p').attr('color') == 'green') {
+        kriptoChange.push('+' + tempTD('div div p').text());
+      } else {
+        kriptoChange.push('-' + tempTD('div div p').text());
+      }
+
+      var tempTD = cheerio.load(kriptoSatir[i + 5]);
+      kriptoVolume.push(tempTD('div a p').text());
+
+      var tempTD = cheerio.load(kriptoSatir[i + 6]);
+      kriptoCirculating.push(tempTD('div p').text());
     }
 
     var result = [];
@@ -41,8 +68,11 @@ const kriptoController = function (req, res, next) {
       kriptoObject = new Kripto(
         kriptoSira[i],
         kriptoName[i],
+        kriptoImage[i],
+        kriptoSembol[i],
         kriptoMarketCap[i],
         kriptoFiyat[i],
+        kriptoDurum[i],
         kriptoVolume[i],
         kriptoCirculating[i],
         kriptoChange[i]
