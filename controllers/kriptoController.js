@@ -18,9 +18,11 @@ const kriptoController = function (req, res, next) {
     var kriptoMarketCap = [];
     var kriptoFiyat = [];
     var kriptoDurum = [];
+    var kriptoDurum7d = [];
     var kriptoVolume = [];
     var kriptoCirculating = [];
     var kriptoChange = [];
+    var kriptoChange7d = [];
 
     $('tbody tr td').each(function (i, elem) {
       if (
@@ -31,7 +33,7 @@ const kriptoController = function (req, res, next) {
         kriptoSatir.push($(this).html());
     });
 
-    for (var i = 0; i < kriptoSatir.length; i += 7) {
+    for (var i = 0; i < kriptoSatir.length; i += 8) {
       var tempTD = cheerio.load(kriptoSatir[i]);
       kriptoSira.push(tempTD('p').text());
 
@@ -43,12 +45,9 @@ const kriptoController = function (req, res, next) {
       kriptoSembol.push(tempTD('a div div div p').text());
 
       var tempTD = cheerio.load(kriptoSatir[i + 2]);
-      kriptoMarketCap.push(tempTD('p').text());
-
-      var tempTD = cheerio.load(kriptoSatir[i + 3]);
       kriptoFiyat.push(tempTD('div a').text());
 
-      var tempTD = cheerio.load(kriptoSatir[i + 4]);
+      var tempTD = cheerio.load(kriptoSatir[i + 3]);
       kriptoDurum.push(tempTD('div div p').attr('color'));
       if (tempTD('div div p').attr('color') == 'green') {
         kriptoChange.push('+' + tempTD('div div p').text());
@@ -56,11 +55,22 @@ const kriptoController = function (req, res, next) {
         kriptoChange.push('-' + tempTD('div div p').text());
       }
 
+      var tempTD = cheerio.load(kriptoSatir[i + 4]);
+      kriptoDurum7d.push(tempTD('div div p').attr('color'));
+      if (tempTD('div div p').attr('color') == 'green') {
+        kriptoChange7d.push('+' + tempTD('div div p').text());
+      } else {
+        kriptoChange7d.push('-' + tempTD('div div p').text());
+      }
+
       var tempTD = cheerio.load(kriptoSatir[i + 5]);
-      kriptoVolume.push(tempTD('div a p').text());
+      kriptoMarketCap.push(tempTD('p').text());
 
       var tempTD = cheerio.load(kriptoSatir[i + 6]);
-      kriptoCirculating.push(tempTD('div p').text());
+      kriptoVolume.push(tempTD('div a p').text());
+
+      var tempTD = cheerio.load(kriptoSatir[i + 7]);
+      kriptoCirculating.push(tempTD('div div p').text());
     }
 
     var result = [];
@@ -73,9 +83,11 @@ const kriptoController = function (req, res, next) {
         kriptoMarketCap[i],
         kriptoFiyat[i],
         kriptoDurum[i],
+        kriptoDurum7d[i],
         kriptoVolume[i],
         kriptoCirculating[i],
-        kriptoChange[i]
+        kriptoChange[i],
+        kriptoChange7d[i]
       );
       result.push(kriptoObject);
     }
