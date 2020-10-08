@@ -40,7 +40,7 @@ const borsaController = function (req, res, next) {
 
       for (var i = 0; i < borsalar.length; i++) {
         borsaName.push(borsalar[i].match(/([a-zA-Z])\w+/g));
-        borsa.push(borsalar[i].match(/([0-9]+,)\w+/g));
+        borsa.push(borsalar[i].match(/[-]?([0-9]+,)\w+/g));
         borsaZaman.push(borsalar[i].match(/(\d{2}):(\d{2}):(\d{2})/g));
       }
 
