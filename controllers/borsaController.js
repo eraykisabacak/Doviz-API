@@ -18,44 +18,55 @@ const borsaController = function (req, res, next) {
         if ($(this).text() !== null && $(this).text() !== '')
           borsalar[i] = $(this).text();
       });
-      var borsa = [];
-      for (var i = 0; i < borsalar.length; i++) {
-        borsa.push(borsalar[i].split('\t\t\t\t\t\t\t\t\t\t\t\t'));
-      }
+
       //////
       $('#acik_koyu_yeri2 tbody tr').each(function (i, elem) {
         if ($(this).text() !== null && $(this).text() !== '')
           borsalar.push($(this).text());
       });
-      var borsa = [];
-      for (var i = 0; i < borsalar.length; i++) {
-        borsa.push(borsalar[i].split('\t\t\t\t\t\t\t\t\t\t\t'));
-        console.log(borsalar[i]);
-      }
-      //////
+
       $('#acik_koyu_yeri3 tbody tr').each(function (i, elem) {
-        if ($(this).text() !== null && $(this).text() !== '')
+        if (
+          $(this).text() !== null &&
+          $(this).text() !== '' &&
+          $(this).text() !== ' '
+        )
           borsalar.push($(this).text());
       });
 
+      var borsaName = [];
+      var borsaZaman = [];
       var borsa = [];
+
       for (var i = 0; i < borsalar.length; i++) {
-        borsa.push(borsalar[i].split('\t\t\t\t\t\t\t\t\t\t\t'));
+        borsaName.push(borsalar[i].match(/([a-zA-Z])\w+/g));
+        borsa.push(borsalar[i].match(/([0-9]+,)\w+/g));
+        borsaZaman.push(borsalar[i].match(/(\d{2}):(\d{2}):(\d{2})/g));
       }
 
-      var borsaName = [];
       var borsaFiyat = [];
       var borsaDegisim = [];
-      var borsaZaman = [];
+
+      var borsa = borsa.filter(function (el) {
+        return el != null;
+      });
+
       for (var i = 0; i < borsa.length; i++) {
-        borsaName.push(borsa[i][1]);
-        borsaFiyat.push(borsa[i][3]);
-        borsaDegisim.push(borsa[i][4]);
+        borsaFiyat.push(borsa[i][0]);
+        borsaDegisim.push(borsa[i][1]);
         borsaZaman.push(borsa[i][5]);
       }
 
+      borsaName.splice(0, 1);
+      borsaName.splice(34, 1);
+      borsaName.splice(68, 1);
+
+      var borsaZaman = borsaZaman.filter(function (el) {
+        return el != null;
+      });
+
       var result = [];
-      for (var i = 1; i < borsaName.length; i++) {
+      for (var i = 0; i < borsaName.length; i++) {
         borsaObject = new BorsaFiyatlari(
           borsaName[i],
           borsaFiyat[i],
@@ -65,12 +76,6 @@ const borsaController = function (req, res, next) {
         result.push(borsaObject);
       }
       res.json({ result });
-      //res.json({ borsalar });
-      //console.log(borsalar);
-      //console.log(borsaName);
-      //console.log(borsaFiyat);
-      //console.log(borsaDegisim);
-      //console.log(borsaZaman);
     }
   );
 };
