@@ -91,6 +91,7 @@ const kriptoController = function (req, res, next) {
       );
       result.push(kriptoObject);
     }
+    console.log(result);
     res.json({ result });
   });
 };
