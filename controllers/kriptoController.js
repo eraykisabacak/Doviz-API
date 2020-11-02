@@ -45,7 +45,7 @@ const kriptoController = function (req, res, next) {
       kriptoSembol.push(tempTD('a div div div p').text());
 
       var tempTD = cheerio.load(kriptoSatir[i + 2]);
-      kriptoFiyat.push(tempTD('div a').text());
+      kriptoFiyat.push(tempTD('a').text());
 
       var tempTD = cheerio.load(kriptoSatir[i + 3]);
       kriptoDurum.push(tempTD('div div p').attr('color'));
