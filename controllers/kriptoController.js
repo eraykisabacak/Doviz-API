@@ -48,25 +48,26 @@ const kriptoController = function (req, res, next) {
       kriptoFiyat.push(tempTD('a').text());
 
       var tempTD = cheerio.load(kriptoSatir[i + 3]);
-      kriptoDurum7d.push(tempTD('span').attr('color'));
 
       const durum7d = tempTD('span').attr('class');
 
       if (durum7d.includes('upColor')) {
         kriptoChange7d.push('+' + tempTD('span').text());
+        kriptoDurum7d.push('+');
       } else {
         kriptoChange7d.push('-' + tempTD('span').text());
+        kriptoDurum7d.push('-');
       }
 
       var tempTD = cheerio.load(kriptoSatir[i + 4]);
-      kriptoDurum.push(tempTD('span').attr('class'));
-
       const durum = tempTD('span').attr('class');
       
       if (durum.includes('upColor')) {
         kriptoChange.push('+' + tempTD('span').text());
+        kriptoDurum.push('+');
       } else {
         kriptoChange.push('-' + tempTD('span').text());
+        kriptoDurum.push('-');
       }
 
 
