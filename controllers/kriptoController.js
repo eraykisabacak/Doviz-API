@@ -33,7 +33,7 @@ const kriptoController = function (req, res, next) {
         kriptoSatir.push($(this).html());
     });
 
-    for (var i = 0; i < kriptoSatir.length; i += 8) {
+    for (var i = 0; i < 55; i += 8) {
       var tempTD = cheerio.load(kriptoSatir[i]);
       kriptoSira.push(tempTD('p').text());
 
@@ -48,19 +48,25 @@ const kriptoController = function (req, res, next) {
       kriptoFiyat.push(tempTD('a').text());
 
       var tempTD = cheerio.load(kriptoSatir[i + 3]);
-      kriptoDurum.push(tempTD('div div p').attr('color'));
-      if (tempTD('div div p').attr('color') == 'green') {
-        kriptoChange.push('+' + tempTD('div div p').text());
+      kriptoDurum.push(tempTD('span').attr('class'));
+      
+      const durum = tempTD('span').attr('class');
+      
+      if (durum.includes('upColor')) {
+        kriptoChange.push('+' + tempTD('span').text());
       } else {
-        kriptoChange.push('-' + tempTD('div div p').text());
+        kriptoChange.push('-' + tempTD('span').text());
       }
 
       var tempTD = cheerio.load(kriptoSatir[i + 4]);
-      kriptoDurum7d.push(tempTD('div div p').attr('color'));
-      if (tempTD('div div p').attr('color') == 'green') {
-        kriptoChange7d.push('+' + tempTD('div div p').text());
+      kriptoDurum7d.push(tempTD('span').attr('color'));
+
+      const durum7d = tempTD('span').attr('class');
+
+      if (durum7d.includes('upColor')) {
+        kriptoChange7d.push('+' + tempTD('span').text());
       } else {
-        kriptoChange7d.push('-' + tempTD('div div p').text());
+        kriptoChange7d.push('-' + tempTD('span').text());
       }
 
       var tempTD = cheerio.load(kriptoSatir[i + 5]);
