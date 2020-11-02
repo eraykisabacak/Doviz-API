@@ -33,7 +33,7 @@ const kriptoController = function (req, res, next) {
         kriptoSatir.push($(this).html());
     });
 
-    for (var i = 0; i < 55; i += 8) {
+    for (var i = 0; i < kriptoSatir.length; i += 8) {
       var tempTD = cheerio.load(kriptoSatir[i]);
       kriptoSira.push(tempTD('p').text());
 
@@ -49,7 +49,7 @@ const kriptoController = function (req, res, next) {
 
       var tempTD = cheerio.load(kriptoSatir[i + 3]);
       kriptoDurum.push(tempTD('span').attr('class'));
-      
+
       const durum = tempTD('span').attr('class');
       
       if (durum.includes('upColor')) {
