@@ -28,7 +28,6 @@ const indexController = function (req, res, next) {
     let bono = $('#bono_header_son_data').text();
     let bonoSon = $('#bono_header_son').text();
 
-    console.log(dovizler);
     var durum = new Doviz(
       bist100,
       bist100Son,

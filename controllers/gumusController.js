@@ -8,7 +8,7 @@ const gumusController = function (req, res, next) {
   request(
     'https://uzmanpara.milliyet.com.tr/altin-fiyatlari/',
     (error, response, body) => {
-      if (error && res.statusCode == 200) return console.error(error);
+      if (error && response.statusCode == 200) return console.error(error);
 
       let $ = cheerio.load(body);
 
