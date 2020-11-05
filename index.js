@@ -20,7 +20,7 @@ wss.on('connection', function connection(ws) {
   
   // /api
   request(
-    'http://localhost:3000/api',
+    'https://dovizapi.herokuapp.com/api',
     (error, response, body) => {
       if (!response) return;
       if (error && response.statusCode != 200) return console.error(error);
@@ -30,7 +30,7 @@ wss.on('connection', function connection(ws) {
   
   // /api/altin
   request(
-    'http://localhost:3000/api/altin',
+    'https://dovizapi.herokuapp.com/api/altin',
     (error, response, body) => {
       if (!response) return;
       if (error && response.statusCode != 200) return console.error(error);
@@ -40,7 +40,7 @@ wss.on('connection', function connection(ws) {
   
   // /api/gumus
   request(
-    'http://localhost:3000/api/gumus',
+    'https://dovizapi.herokuapp.com/api/gumus',
     (error, response, body) => {
       if (!response) return;
       if (error && response.statusCode != 200) return console.error(error);
@@ -50,7 +50,7 @@ wss.on('connection', function connection(ws) {
   
   // /api/borsa
   request(
-    'http://localhost:3000/api/borsa',
+    'https://dovizapi.herokuapp.com/api/borsa',
     (error, response, body) => {
       if (!response) return;
       if (error && response.statusCode != 200) return console.error(error);
@@ -60,7 +60,7 @@ wss.on('connection', function connection(ws) {
 
   // /api/kripto
   request(
-    'http://localhost:3000/api/kriptopara',
+    'https://dovizapi.herokuapp.com/api/kriptopara',
     (error, response, body) => {
       if (!response) return;
       if (error && response.statusCode != 200) return console.error(error);
@@ -73,16 +73,15 @@ wss.on('connection', function connection(ws) {
 
     // /api
     request(
-    'http://localhost:3000/api',
+    'https://dovizapi.herokuapp.com/api',
       (error, response, body) => {
         if (!response) return;
         try {
           if (error && response.statusCode != 200) return console.error(error);
           
           if (cache[0] != body) {
-            cache[0] = body;     
+            cache[0] = body;
             ws.send(JSON.stringify(["api",JSON.parse(body)[0]]));
-
           }
         } catch (err ) {
           console.error(err);
@@ -93,7 +92,7 @@ wss.on('connection', function connection(ws) {
     
     // /api/altin
     request(
-    'http://localhost:3000/api/altin',
+    'https://dovizapi.herokuapp.com/api/altin',
     (error, response, body) => {
       if (!response) return;
       if (error && response.statusCode != 200) return console.error(error);
@@ -106,7 +105,7 @@ wss.on('connection', function connection(ws) {
     
     // /api/gumus
     request(
-    'http://localhost:3000/api/gumus',
+    'https://dovizapi.herokuapp.com/api/gumus',
     (error, response, body) => {
       if (!response) return;
       if (error && response.statusCode != 200) return console.error(error);
@@ -120,7 +119,7 @@ wss.on('connection', function connection(ws) {
     
     // /api/borsa
     request(
-    'http://localhost:3000/api/borsa',
+    'https://dovizapi.herokuapp.com/api/borsa',
     (error, response, body) => {
       if (!response) return;
       if (error && response.statusCode != 200) return console.error(error);
@@ -133,7 +132,7 @@ wss.on('connection', function connection(ws) {
     
     // /api/kripto
     request(
-    'http://localhost:3000/api/kriptopara',
+    'https://dovizapi.herokuapp.com/api/kriptopara',
       (error, response, body) => {
       try {
         if (!response) return;
