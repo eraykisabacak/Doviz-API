@@ -3,9 +3,9 @@ var http = require('http').createServer(app);
 var cors = require('cors')
 const request = require('request');
 
-const WebSocket = require('ws');
+const { Server } = require('ws');
 
-const wss = new WebSocket.Server({ server:http });
+const wss = new Server({ server:http });
 
 let onlineUsers = 0; 
 
