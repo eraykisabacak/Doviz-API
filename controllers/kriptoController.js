@@ -33,7 +33,7 @@ const kriptoController = function (req, res, next) {
         kriptoSatir.push($(this).html());
     });
 
-    for (var i = 0; i < kriptoSatir.length; i += 8) {
+    for (var i = 0; i < 80; i += 8) {
       var tempTD = cheerio.load(kriptoSatir[i]);
       kriptoSira.push(tempTD('p').text());
 
