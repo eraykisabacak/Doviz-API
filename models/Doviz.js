@@ -19,8 +19,8 @@ class Doviz {
     this.DolarDegisim = dolarSon;
     this.Euro = euro;
     this.EuroDegisim = euroSon;
-    this.Altın = altın;
-    this.AltınDegisim = altınSon;
+    this.Altin = altın;
+    this.AltinDegisim = altınSon;
     this.Petrol = petrol;
     this.PetrolDegisim = petrolSon;
     this.Bono = bono;
