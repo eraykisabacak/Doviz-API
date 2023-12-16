@@ -2,14 +2,16 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var cors = require('cors')
 const request = require('request');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./utils/swaggerDef');
 
-const { Server } = require('ws');
+//const { Server } = require('ws');
 
-const wss = new Server({ server:http });
+//const wss = new Server({ server:http });
 
-let onlineUsers = 0; 
+//let onlineUsers = 0;
 
-wss.on('connection', function connection(ws) {
+/*/*wss.on('connection', function connection(ws) {
 
   console.log('A new Client Connected');
   ws.send('Welcome new Client');
@@ -66,7 +68,7 @@ wss.on('connection', function connection(ws) {
       if (error && response.statusCode != 200) return console.error(error);
       cache[4] = body;
       ws.send(JSON.stringify(["kriptopara",body]));
-    });  
+    });
 
   setInterval(() => {
     if (!onlineUsers) return;
@@ -158,23 +160,24 @@ wss.on('connection', function connection(ws) {
       }
     });
   });*/
-
+/*
    ws.on('close', function() {
      console.log('Connection Closed');
      onlineUsers--;
     });
-});
+});*/
 
 app.use(cors());
 
 const routers = require('./routers');
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/', routers);
 
 const PORT = process.env.PORT || 3000;
 
 http.listen(PORT, function () {
-  console.log('The app is running...');
+  console.log('The app is running... ' , PORT);
 });
 
 
