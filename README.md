@@ -1,6 +1,6 @@
 # Doviz-API
 
-Bilgiler uzman.milliyet.com'den alınmıştır. Kripto para bilgileri coinmarketcap.com'den alınmıştır.
+Bilgiler uzman.milliyet.com'den alınmıştır.
 
 | Route           | HTTP Verb | Description                                                                       |
 | --------------- | --------- |-----------------------------------------------------------------------------------|
