@@ -7,6 +7,7 @@ const { indexController } = require('../controllers/indexController');
 const { altinController } = require('../controllers/altinController');
 const { gumusController } = require('../controllers/gumusController');
 const { borsaController } = require('../controllers/borsaController');
+const { borsaAllController } = require('../controllers/borsaAllController');
 const { kriptoController } = require('../controllers/kriptoController');
 
 
@@ -54,6 +55,20 @@ router.get('/gumus',cors(), gumusController);
  *         description: A successful response
  */
 router.get('/borsa',cors(), borsaController);
+
+
+/**
+ * @swagger
+ * /api/borsaAll:
+ *   get:
+ *     summary: Get all stock market data
+ *     description: Returns all stock market data
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ */
+router.get('/borsaAll',cors(), borsaAllController);
+
 //router.get('/kriptopara',cors(), kriptoController);
 
 module.exports = router;

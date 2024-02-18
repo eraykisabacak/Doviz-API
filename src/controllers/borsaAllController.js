@@ -1,15 +1,15 @@
-const cheerio = require('cheerio');
-const request = require('request');
+const cheerio = require("cheerio");
+const request = require("request");
 
-const BorsaFiyatlari = require('../models/BorsaFiyatlari');
-const {errorResponse, successResponse} = require("../utils/ResponseHandler");
+const BorsaFiyatlari = require("../models/BorsaFiyatlari");
+const { errorResponse, successResponse } = require("../utils/ResponseHandler");
 
 // https://uzmanpara.milliyet.com.tr/
 
-const borsaController = function (req, res, next) {
+const borsaAllController = function (req, res, next) {
   var borsalar = [];
   request(
-    "https://uzmanpara.milliyet.com.tr/canli-borsa/",
+    "https://uzmanpara.milliyet.com.tr/canli-borsa/bist-TUM-hisseleri/",
     (error, response, body) => {
       if (error || res.statusCode !== 200)
         return errorResponse(res, "Server Error", 500);
@@ -87,5 +87,5 @@ const borsaController = function (req, res, next) {
 };
 
 module.exports = {
-  borsaController,
+  borsaAllController,
 };
