@@ -32,4 +32,4 @@ docker stop {container id}
 
 # Swagger UI
 
-![Swagger UI](image.png)
+![Swagger UI](swagger-ui.png)
