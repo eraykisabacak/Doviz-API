@@ -1,9 +1,9 @@
 class BorsaFiyatlari {
-  constructor(Name, Fiyat, Degisim, Saat) {
-    this.Name = Name;
-    this.Fiyat = Fiyat;
-    this.Degisim = Degisim;
-    this.Saat = Saat;
+  constructor(name, fiyat, change, time) {
+    this.name = name;
+    this.price = fiyat;
+    this.change = change;
+    this.time = time;
   }
 }
 

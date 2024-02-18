@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const cheerio = require('cheerio');
 const request = require('request');
 
@@ -7,7 +9,7 @@ const {errorResponse, successResponse} = require("../utils/ResponseHandler");
 const altinController = function (req, res, next) {
   var altinDovizler = [];
   request(
-    'https://uzmanpara.milliyet.com.tr/altin-fiyatlari/',
+    process.env.ALL_GOLD_DATA,
     (error, response, body) => {
         if (error || res.statusCode !== 200) return errorResponse(res, 'Server Error', 500);
 

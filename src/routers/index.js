@@ -6,10 +6,7 @@ const router = express.Router();
 const { indexController } = require('../controllers/indexController');
 const { altinController } = require('../controllers/altinController');
 const { gumusController } = require('../controllers/gumusController');
-const { borsaController } = require('../controllers/borsaController');
-const { borsaAllController } = require('../controllers/borsaAllController');
-const { kriptoController } = require('../controllers/kriptoController');
-
+const { borsaController, borsaAllController, borsa50Controller, borsa30Controller } = require('../controllers/borsaController');
 
 /**
  * @swagger
@@ -55,8 +52,6 @@ router.get('/gumus',cors(), gumusController);
  *         description: A successful response
  */
 router.get('/borsa',cors(), borsaController);
-
-
 /**
  * @swagger
  * /api/borsaAll:
@@ -68,7 +63,27 @@ router.get('/borsa',cors(), borsaController);
  *         description: A successful response
  */
 router.get('/borsaAll',cors(), borsaAllController);
-
-//router.get('/kriptopara',cors(), kriptoController);
+/**
+ * @swagger
+ * /api/borsa50:
+ *   get:
+ *     summary: Get all stock market data
+ *     description: Returns all stock market data
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ */
+router.get('/borsa50',cors(), borsa50Controller);
+/**
+ * @swagger
+ * /api/borsa30:
+ *   get:
+ *     summary: Get all stock market data
+ *     description: Returns all stock market data
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ */
+router.get('/borsa30',cors(), borsa30Controller);
 
 module.exports = router;

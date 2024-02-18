@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const cheerio = require('cheerio');
 const request = require('request');
 
@@ -6,7 +8,7 @@ const { successResponse, errorResponse } = require("../utils/ResponseHandler");
 
 const indexController = function (req, res, next) {
   var dovizler = [];
-  request('https://uzmanpara.milliyet.com.tr', (error, response, body) => {
+  request(process.env.ALL_CURRENCY_DATA, (error, response, body) => {
     if (error || res.statusCode !== 200) return errorResponse(res, 'Server Error', 500);
 
     try {
@@ -45,16 +47,6 @@ const indexController = function (req, res, next) {
           bonoSon
       );
       dovizler.push(durum);
-
-      /*
-                  console.log(durum);
-                  console.log('Bist100 : ' + bist100 + ' Son : ' + bist100Son);
-                  console.log('Dolar Fiyat : ' + dolar + ' Son : ' + dolarSon);
-                  console.log('Euro Fiyat : ' + euro + ' Son : ' + euroSon);
-                  console.log('Altın Fiyat : ' + altın + ' Son : ' + altınSon);
-                  console.log('Petrol Fiyat : ' + petrol + ' Son : ' + petrolSon);
-                  console.log('Bono Fiyat : ' + bono + ' Son : ' + bonoSon);
-                  */
 
       successResponse(res, dovizler);
     }catch (error){
