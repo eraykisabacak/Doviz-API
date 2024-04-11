@@ -6,7 +6,7 @@ const router = express.Router();
 const { indexController } = require('../controllers/indexController');
 const { altinController } = require('../controllers/altinController');
 const { gumusController } = require('../controllers/gumusController');
-const { borsaController, borsaAllController, borsa50Controller, borsa30Controller } = require('../controllers/borsaController');
+const { borsaController, borsaAllController, borsa50Controller, borsa30Controller, borsaSembolController } = require('../controllers/borsaController');
 
 /**
  * @swagger
@@ -85,5 +85,24 @@ router.get('/borsa50',cors(), borsa50Controller);
  *         description: A successful response
  */
 router.get('/borsa30',cors(), borsa30Controller);
+
+/**
+ * @swagger
+ * /api/{stock}:
+ *   get:
+ *     summary: Get stock market data for a specific stock
+ *     description: Returns stock market data for the specified stock symbol
+ *     parameters:
+ *       - in: path
+ *         name: stock
+ *         required: true
+ *         description: Stock symbol
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ */
+router.get('/:stock', cors(), borsaSembolController);
 
 module.exports = router;
