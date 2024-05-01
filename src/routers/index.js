@@ -11,7 +11,9 @@ const { borsaController,
         borsa50Controller,
         borsa30Controller,
         borsaSembolController,
-        indicesController
+        indicesController,
+        highestIndexController,
+        lowestIndexController
 } = require('../controllers/borsaController');
 
 /**
@@ -102,6 +104,42 @@ router.get('/borsa30',cors(), borsa30Controller);
  *         description: A successful response
  */
 router.get('/indices',cors(), indicesController);
+/**
+ * @swagger
+ * /api/highest:
+ *   get:
+ *     summary: Get high index prices of Borsa Istanbul indexes.
+ *     description: Returns high index prices of Borsa Istanbul indexes.
+ *     parameters:
+ *       - in: query
+ *         name: pageNumber
+ *         schema:
+ *           type: integer
+ *           format: int32
+ *         description: The page number for pagination
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ */
+router.get('/highest',cors(), highestIndexController);
+/**
+ * @swagger
+ * /api/lowest:
+ *   get:
+ *     summary: Get low index prices of Borsa Istanbul indexes.
+ *     description: Returns low index of Borsa Istanbul indexes.
+ *     parameters:
+ *       - in: query
+ *         name: pageNumber
+ *         schema:
+ *           type: integer
+ *           format: int32
+ *         description: The page number for pagination
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ */
+router.get('/lowest',cors(), lowestIndexController);
 /**
  * @swagger
  * /api/{stock}:

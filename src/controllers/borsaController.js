@@ -52,6 +52,36 @@ const indicesController = function (req, res, next) {
   );
 };
 
+const highestIndexController = function (req, res, next) {
+  let url;
+  if(req.query.pageNumber){
+    url = process.env.HIGHEST_INDEX_DATA.replace('{pageNumber}',req.query.pageNumber)
+  }else{
+    url = process.env.HIGHEST_INDEX_DATA.replace('{pageNumber}',1)
+  }
+  request(
+      url,
+      (error, response, body) => {
+        dataParse3(error, response, body, res)
+      }
+  );
+};
+
+const lowestIndexController = function (req, res, next) {
+  let url;
+  if(req.query.pageNumber){
+    url = process.env.LOW_INDEX_DATA.replace('{pageNumber}',req.query.pageNumber)
+  }else{
+    url = process.env.LOW_INDEX_DATA.replace('{pageNumber}',1)
+  }
+  request(
+      url,
+      (error, response, body) => {
+        dataParse3(error, response, body, res)
+      }
+  );
+};
+
 const borsaSembolController = function (req, res, next) {
   const stockSymbol = req.params.stock.toUpperCase();
   request(
@@ -175,5 +205,7 @@ module.exports = {
   borsa50Controller,
   borsa30Controller,
   borsaSembolController,
-  indicesController
+  indicesController,
+  highestIndexController,
+  lowestIndexController
 };
