@@ -6,7 +6,13 @@ const router = express.Router();
 const { indexController } = require('../controllers/indexController');
 const { altinController } = require('../controllers/altinController');
 const { gumusController } = require('../controllers/gumusController');
-const { borsaController, borsaAllController, borsa50Controller, borsa30Controller, borsaSembolController } = require('../controllers/borsaController');
+const { borsaController,
+        borsaAllController,
+        borsa50Controller,
+        borsa30Controller,
+        borsaSembolController,
+        indicesController
+} = require('../controllers/borsaController');
 
 /**
  * @swagger
@@ -85,7 +91,17 @@ router.get('/borsa50',cors(), borsa50Controller);
  *         description: A successful response
  */
 router.get('/borsa30',cors(), borsa30Controller);
-
+/**
+ * @swagger
+ * /api/indices:
+ *   get:
+ *     summary: Get all prices of Borsa Istanbul indexes. (XU100, XSTKR, XGIDA)
+ *     description: Returns all prices of Borsa Istanbul indexes. (XU100, XSTKR, XGIDA)
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ */
+router.get('/indices',cors(), indicesController);
 /**
  * @swagger
  * /api/{stock}:

@@ -3,9 +3,8 @@ require('dotenv').config()
 const cheerio = require('cheerio');
 const request = require('request');
 
-const BorsaFiyatlari = require('../models/BorsaFiyatlari');
 const {errorResponse, successResponse} = require("../utils/ResponseHandler");
-const { all } = require('../routers');
+const Index = require('../models/Index');
 
 const borsaController = function (req, res, next) {
   request(
@@ -40,6 +39,16 @@ const borsa30Controller = function (req, res, next) {
     (error, response, body) => {
       dataParse(error, response, body, res)
     }
+  );
+};
+
+
+const indicesController = function (req, res, next) {
+  request(
+      process.env.ALL_INDICES_DATA,
+      (error, response, body) => {
+        dataParse3(error, response, body, res)
+      }
   );
 };
 
@@ -116,6 +125,49 @@ const dataParse2 = (error, response, body, res) => {
   }
 };
 
+const dataParse3 = (error, response, body, res) => {
+  if (error || res.statusCode !== 200) {
+    return errorResponse(res, "Server Error", 500);
+  }
+
+  try {
+    const $ = cheerio.load(body);
+    const indices = [];
+
+    $(
+        "table.table3.table4 tbody tr"
+    ).each(function (i, row) {
+      const cells = $(row).find("td");
+      if($(cells[0]).text().trim()){
+        const indicesName = $(cells[0]).text().trim();
+        const indicesLast = $(cells[1]).text().trim();
+        const indicesYesterday = $(cells[2]).text().trim();
+        const indicesPercent = $(cells[3]).text().trim();
+        const indicesHigh = $(cells[4]).text().trim();
+        const indicesLow = $(cells[5]).text().trim();
+        const indicesVolume = $(cells[6]).text().trim();
+        const indicesVolumePrice = $(cells[7]).text().trim();
+        indices.push(new Index(
+            indicesName,
+            indicesLast,
+            indicesYesterday,
+            indicesPercent,
+            indicesHigh,
+            indicesLow,
+            indicesVolume,
+            indicesVolumePrice
+        ))
+      }
+    });
+
+    successResponse(res, indices);
+  } catch (error) {
+    console.log(error);
+    return errorResponse(res, "Parse Error", 500);
+  }
+};
+
+
 
 module.exports = {
   borsaController,
@@ -123,4 +175,5 @@ module.exports = {
   borsa50Controller,
   borsa30Controller,
   borsaSembolController,
+  indicesController
 };
